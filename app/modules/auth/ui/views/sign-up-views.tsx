@@ -18,8 +18,9 @@ import { OctagonAlertIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 
 const formSchema = z
   .object({
@@ -40,9 +41,9 @@ const formSchema = z
   });
 
 export const SignUpView = () => {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,6 +64,7 @@ export const SignUpView = () => {
         email: values.email,
         password: values.password,
         name: values.name,
+        callbackURL: "/",
       },
 
       {
@@ -191,17 +193,29 @@ export const SignUpView = () => {
                     disabled={isLoading}
                     type="button"
                     className="w-full"
+                    onClick={() => {
+                      authClient.signIn.social({
+                        provider: "google",
+                        callbackURL: "/",
+                      });
+                    }}
                   >
-                    Google
+                    <FaGoogle />
                   </Button>
 
                   <Button
+                    onClick={() => {
+                      authClient.signIn.social({
+                        provider: "github",
+                        callbackURL: "/",
+                      });
+                    }}
                     variant="outline"
                     disabled={isLoading}
                     type="button"
                     className="w-full"
                   >
-                    GitHub
+                    <FaGithub />
                   </Button>
                 </div>
                 <div className="text-sm text-center">
