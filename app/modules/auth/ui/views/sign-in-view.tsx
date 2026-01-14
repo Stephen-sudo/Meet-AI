@@ -18,8 +18,9 @@ import { OctagonAlertIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -30,6 +31,7 @@ const formSchema = z.object({
 
 export const SignInView = () => {
   const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,6 +51,7 @@ export const SignInView = () => {
       {
         email: values.email,
         password: values.password,
+        callbackURL: "/",
       },
 
       {
@@ -56,7 +59,6 @@ export const SignInView = () => {
           setIsLoading(false);
           router.push("/");
         },
-
         onError: ({ error }) => {
           setError(error.message);
           setIsLoading(false);
@@ -140,17 +142,29 @@ export const SignInView = () => {
                     disabled={isLoading}
                     type="button"
                     className="w-full"
+                    onClick={() => {
+                      authClient.signIn.social({
+                        provider: "google",
+                        callbackURL: "/",
+                      });
+                    }}
                   >
-                    Google
+                    <FaGoogle />
                   </Button>
 
                   <Button
+                    onClick={() => {
+                      authClient.signIn.social({
+                        provider: "github",
+                        callbackURL: "/",
+                      });
+                    }}
                     variant="outline"
                     disabled={isLoading}
                     type="button"
                     className="w-full"
                   >
-                    GitHub
+                    <FaGithub />
                   </Button>
                 </div>
                 <div className="text-sm text-center">
