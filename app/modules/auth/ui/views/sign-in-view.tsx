@@ -21,6 +21,7 @@ import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaGoogle, FaGithub } from "react-icons/fa";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -63,19 +64,24 @@ export const SignInView = () => {
           setError(error.message);
           setIsLoading(false);
         },
-      }
+      },
     );
   }
 
   return (
     <div className="flex flex-col gap-6">
       <Card className="overflow-hidden p-0">
-        <CardContent className="grid md:grid-cols-2 p-0">
+        <CardContent className="grid p-0 md:grid-cols-2">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 md:p-8">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="p-6 md:p-8"
+            >
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col items-center justify-center">
-                  <h1 className="text-2xl font-bold">Welcome back</h1>
+                  <h1 className="text-2xl font-bold">
+                    Welcome back
+                  </h1>
                   <p className="text-muted-foreground text-balance">
                     Login to your account
                   </p>
@@ -127,10 +133,20 @@ export const SignInView = () => {
                     <AlertTitle> {error}</AlertTitle>
                   </Alert>
                 )}
-                <Button disabled={isLoading} type="submit" className="w-full">
+                <Button
+                  disabled={isLoading}
+                  type="submit"
+                  className="w-full"
+                >
                   Sign In
                 </Button>
-                <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:border-t after:flex after:items-center">
+                <div
+                  className={cn(
+                    "after:border-border relative text-center text-sm",
+                    "after:absolute after:inset-0 after:top-1/2 after:z-0",
+                    "after:flex after:items-center after:border-t",
+                  )}
+                >
                   <span className="text-muted-foreground bg-card relative z-10 px-2">
                     Or continue with
                   </span>
@@ -167,11 +183,11 @@ export const SignInView = () => {
                     <FaGithub />
                   </Button>
                 </div>
-                <div className="text-sm text-center">
+                <div className="text-center text-sm">
                   Don&#39;t have an account?{" "}
                   <Link
                     href="/sign-up"
-                    className="underline font-semibold underline-offset-4  hover:text-blue-400"
+                    className="font-semibold underline underline-offset-4 hover:text-blue-400"
                   >
                     Sign up
                   </Link>
@@ -179,15 +195,17 @@ export const SignInView = () => {
               </div>
             </form>
           </Form>
-          <div className="bg-radial from-green-700 to-green-900 md:flex flex-col items-center justify-center gap-y-4 hidden">
+          <div className="from-sidebar-accent to-sidebar hidden flex-col items-center justify-center gap-y-4 bg-radial md:flex">
             <Image
               src="/logo.svg"
               alt="lmage"
               width={92}
               height={92}
-              className="w-[92px] h-[92px]"
+              className="h-[92px] w-[92px]"
             />
-            <p className="text-white text-2xl font-semibold">Meet.AI</p>
+            <p className="text-2xl font-semibold text-white">
+              Meet.AI
+            </p>
           </div>
         </CardContent>
       </Card>
