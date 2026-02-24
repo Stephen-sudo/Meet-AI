@@ -4,6 +4,9 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useTRPC } from "@/trpc/client";
 import { LoadingState } from "@/components/loading-state";
 import { ErrorState } from "@/components/error-state";
+import { DataTable } from "../components/data-table";
+import { columns } from "../components/columns";
+import { EmptyState } from "@/components/empty-state";
 
 export const AgentsView = () => {
   const trpc = useTRPC();
@@ -11,7 +14,17 @@ export const AgentsView = () => {
     trpc.agents.getMany.queryOptions(),
   );
 
-  return <div>{JSON.stringify(data, null, 2)}</div>;
+  return (
+    <div className="flex flex-1 flex-col gap-y-4 px-4 pb-4 md:px-8">
+      <DataTable columns={columns} data={data} />
+      {data.length === 0 && (
+        <EmptyState
+          title="No Agents Found"
+          description="Create a new agent to get started. Each agent will follow the instructions and can interact with participants in meetings."
+        />
+      )}
+    </div>
+  );
 };
 
 export const AgentsViewWithSuspense = () => {
