@@ -50,7 +50,10 @@ export const AgentsIdViewHeader = ({
             <ChevronRightIcon />
           </BreadcrumbSeparator>
           <BreadcrumbItem>
-            <BreadcrumbLink className="text-xl font-medium">
+            <BreadcrumbLink
+              asChild
+              className="text-xl font-medium"
+            >
               <Link href={`/agents/${agentId}`}>
                 {agentName}
               </Link>
