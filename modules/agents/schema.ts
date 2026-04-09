@@ -6,3 +6,7 @@ export const agentSchema = z.object({
     .string()
     .min(1, { message: "Instructions are required" }),
 });
+
+export const agentUpdateSchema = agentSchema.extend({
+  id: z.string().min(1, { message: "ID is required" }),
+});
