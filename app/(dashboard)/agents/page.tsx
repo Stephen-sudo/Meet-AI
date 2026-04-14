@@ -1,5 +1,5 @@
 import { auth } from "@/lib/auth";
-import { AgentsListHeader } from "@/modules/agents/ui/components/agentsListHeader";
+import { AgentsListHeader } from "@/modules/agents/ui/components/agents-list-header";
 import AgentsViewError, {
   AgentsView,
   AgentsViewWithSuspense,
@@ -21,6 +21,7 @@ interface Props {
 }
 const Page = async ({ searchParams }: Props) => {
   const filters = await loadSearchParams(searchParams);
+
   const session = await auth.api.getSession({
     headers: await headers(),
   });
