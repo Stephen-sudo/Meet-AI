@@ -2,7 +2,7 @@ import {
   MeetingsView,
   MeetingsViewWithSuspense,
   MeetingsViewError,
-} from "@/modules/meetings/ui/meetings-view";
+} from "@/modules/meetings/ui/views/meetings-view";
 import { getQueryClient, trpc } from "@/trpc/server";
 import { Suspense } from "react";
 import {
