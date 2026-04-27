@@ -6,7 +6,6 @@ import {
   pgEnum,
 } from "drizzle-orm/pg-core";
 import { nanoid } from "nanoid";
-import { record } from "zod";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
