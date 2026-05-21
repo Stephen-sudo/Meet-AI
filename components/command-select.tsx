@@ -8,7 +8,7 @@ import {
   CommandList,
   CommandResponsiveDialog,
 } from "@/components/ui/command";
-import { ChevronsDownIcon } from "lucide-react";
+import { ChevronsUpDownIcon } from "lucide-react";
 
 interface CommandSelectProps {
   options: Array<{
@@ -38,6 +38,11 @@ export const CommandSelect = ({
     (option) => option.value === value,
   );
 
+  const handleOpenChange = (open: boolean) => {
+    onSearch?.("");
+    setOpen(open);
+  };
+
   return (
     <>
       <Button
@@ -51,36 +56,37 @@ export const CommandSelect = ({
         onClick={() => setOpen(true)}
       >
         <div>{selectedOption?.children ?? placeholder}</div>
-        <ChevronsDownIcon />
-        <CommandResponsiveDialog
-          shouldFilter={!onSearch}
-          open={open}
-          onOpenChange={setOpen}
-        >
-          <CommandInput
-            onValueChange={onSearch}
-            placeholder="Search..."
-          />
-          <CommandList>
-            <CommandEmpty>
-              <span className="text-muted-foreground text-sm">
-                No results found.
-              </span>
-            </CommandEmpty>
-            {options.map((option) => (
-              <CommandItem
-                key={option.id}
-                onSelect={() => {
-                  onSelect(option.value);
-                  setOpen(false);
-                }}
-              >
-                {option.children}
-              </CommandItem>
-            ))}
-          </CommandList>
-        </CommandResponsiveDialog>
+        <ChevronsUpDownIcon />
       </Button>
+
+      <CommandResponsiveDialog
+        shouldFilter={!onSearch}
+        open={open}
+        onOpenChange={handleOpenChange}
+      >
+        <CommandInput
+          onValueChange={onSearch}
+          placeholder="Search..."
+        />
+        <CommandList>
+          <CommandEmpty>
+            <span className="text-muted-foreground text-sm">
+              No results found.
+            </span>
+          </CommandEmpty>
+          {options.map((option) => (
+            <CommandItem
+              key={option.id}
+              onSelect={() => {
+                onSelect(option.value);
+                handleOpenChange(false);
+              }}
+            >
+              {option.children}
+            </CommandItem>
+          ))}
+        </CommandList>
+      </CommandResponsiveDialog>
     </>
   );
 };

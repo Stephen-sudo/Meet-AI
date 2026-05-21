@@ -25,6 +25,7 @@ import {
   meetingInsertSchema,
   meetingUpdateSchema,
 } from "../schema";
+import { MeetingStatus } from "../types";
 
 export const meetingsRouter = createTRPCRouter({
   update: protectedProcedure
@@ -74,10 +75,21 @@ export const meetingsRouter = createTRPCRouter({
           .max(MAX_PAGE_SIZE)
           .default(DEFAULT_PAGE_SIZE),
         search: z.string().nullish(),
+        agentsId: z.string().nullish(),
+        status: z
+          .enum([
+            MeetingStatus.Active,
+            MeetingStatus.Upcoming,
+            MeetingStatus.Completed,
+            MeetingStatus.Processing,
+            MeetingStatus.Cancelled,
+          ])
+          .nullish(),
       }),
     )
     .query(async ({ input, ctx }) => {
-      const { page, pageSize, search } = input;
+      const { page, pageSize, search, status, agentsId } =
+        input;
       const data = await db
         .select({
           ...getTableColumns(meetings),
@@ -94,6 +106,12 @@ export const meetingsRouter = createTRPCRouter({
             eq(meetings.userId, ctx.session.user.id),
             search
               ? ilike(meetings.name, `%${search}%`)
+              : undefined,
+            status
+              ? eq(meetings.status, status)
+              : undefined,
+            agentsId
+              ? eq(meetings.agentId, agentsId)
               : undefined,
           ),
         )
@@ -113,6 +131,12 @@ export const meetingsRouter = createTRPCRouter({
             eq(meetings.userId, ctx.session.user.id),
             search
               ? ilike(meetings.name, `%${search}%`)
+              : undefined,
+            status
+              ? eq(meetings.status, status)
+              : undefined,
+            agentsId
+              ? eq(meetings.agentId, agentsId)
               : undefined,
           ),
         );
