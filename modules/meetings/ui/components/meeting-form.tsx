@@ -44,6 +44,7 @@ export const MeetingForm = ({
 
   const [openNewAgentDialog, setOpenNewAgentDialog] =
     useState(false);
+
   const [agentSearch, setAgentSearch] = useState("");
 
   const agents = useQuery(
@@ -183,7 +184,7 @@ export const MeetingForm = ({
                       setOpenNewAgentDialog(true)
                     }
                   >
-                    Create a new agent
+                    Create new agent
                   </Button>
                 </FormDescription>
                 <FormMessage />
