@@ -4,10 +4,12 @@ import Image from "next/image";
 interface EmptyStateProps {
   title: string;
   description?: string;
+  image?: string;
 }
 export const EmptyState = ({
   title,
   description,
+  image = "/empty-state.svg",
 }: EmptyStateProps) => {
   return (
     <div
@@ -16,7 +18,7 @@ export const EmptyState = ({
       )}
     >
       <Image
-        src="/emptyState.svg"
+        src={image}
         alt="Empty"
         width={240}
         height={240}
