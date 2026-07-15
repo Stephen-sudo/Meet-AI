@@ -135,3 +135,16 @@
     @apply cursor-pointer;
   }
 }
+
+/* Hide Stream SDK floating participant preview to avoid duplicate tiles
+   (shows both main speaker and a floating PIP by default). */
+.str-video__livestream-layout__floating-participant {
+  display: none !important;
+}
+
+/* Also hide any small floating participant wrappers used by speaker layouts. */
+.str-video__speaker-layout__floating-participant,
+.str-video__speaker-layout
+  .str-video__participant-view--floating {
+  display: none !important;
+}
