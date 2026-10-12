@@ -19,8 +19,32 @@ export const CallUI = ({ meetingName }: Props) => {
 
   const handleJoin = async () => {
     if (!call) return;
-    await call.join();
-    setShow("call");
+
+    console.log("====== JOIN BUTTON ======");
+    console.log("handleJoin called");
+    console.log(
+      "Calling state BEFORE:",
+      call.state.callingState,
+    );
+
+    try {
+      console.log(
+        "call state before join:",
+        call.state.callingState,
+      );
+      await call.join();
+
+      console.log("call.join SUCCESS");
+      console.log(
+        "Calling state AFTER:",
+        call.state.callingState,
+      );
+
+      setShow("call");
+    } catch (error) {
+      console.error("CALL JOIN FAILED:");
+      console.error(error);
+    }
   };
   const handleLeave = async () => {
     if (!call) return;

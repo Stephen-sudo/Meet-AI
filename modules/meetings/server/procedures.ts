@@ -45,14 +45,12 @@ export const meetingsRouter = createTRPCRouter({
             }),
         },
       ]);
-      const expirationTIme =
-        Math.floor(Date.now() / 1000) + 3600; // 1 hour from now
-      const issuedAt = Math.floor(Date.now() / 1000) - 60;
 
+      const now = Math.floor(Date.now() / 1000);
       const token = streamVideo.generateUserToken({
         user_id: ctx.session.user.id,
-        exp: expirationTIme,
-        validity_in_seconds: issuedAt,
+        iat: now - 60, // 1 minute ago
+        exp: now + 3600, // 1 hour from now
       });
       return token;
     },
@@ -114,7 +112,6 @@ export const meetingsRouter = createTRPCRouter({
         })
         .returning();
 
-      // TODO: Create Stream Video call, Upsert stream users
       const call = streamVideo.video.call(
         "default",
         createdMeeting.id,

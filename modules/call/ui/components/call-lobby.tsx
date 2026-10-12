@@ -20,6 +20,7 @@ interface Props {
 
 const DisabledVideoPreview = () => {
   const { data } = authClient.useSession();
+
   return (
     <DefaultVideoPlaceholder
       participant={
