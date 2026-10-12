@@ -9,7 +9,7 @@ interface EmptyStateProps {
 export const EmptyState = ({
   title,
   description,
-  image = "/empty-state.svg",
+  image = "/empty.svg",
 }: EmptyStateProps) => {
   return (
     <div
