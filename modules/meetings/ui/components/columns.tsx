@@ -15,15 +15,7 @@ import {
 } from "lucide-react";
 import { MeetingGetMany } from "../../types";
 import { format } from "date-fns";
-import humanizeDuration from "humanize-duration";
-
-function formatDuration(seconds: number) {
-  return humanizeDuration(seconds * 1000, {
-    largest: 2,
-    round: true,
-    units: ["h", "m", "s"],
-  });
-}
+import { formatDuration } from "@/lib/utils";
 
 const statusIconMap = {
   upcoming: ClockArrowUpIcon,
